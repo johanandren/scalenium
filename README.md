@@ -1,7 +1,7 @@
 scalenium
 =========
 
-A Scala-ified fluent wrapper for selenium inspired but FluentLenium but making use of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
+A Scala-ified fluent wrapper for selenium heavily inspired by FluentLenium but making use of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
 
 
 Using the library
