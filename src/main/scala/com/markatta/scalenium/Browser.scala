@@ -11,9 +11,20 @@ class Browser(protected val driver: WebDriver)
   with Navigation
   with Scripts
   with MarkupSearch
-  with Await {
+  with Await
+  with Forms {
 
   def searchContext = driver
+
+  /** close the current window, quit of no windows left */
+  def close() {
+    driver.close()
+  }
+
+  /** shut down the selenium browser */
+  def quit() {
+    driver.quit()
+  }
 
 }
 

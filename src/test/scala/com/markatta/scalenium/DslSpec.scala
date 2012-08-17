@@ -26,6 +26,8 @@ class DslSpec extends Specification {
     b.first("#it").isDefined must beTrue
     b.first("#it").map(_.visible).getOrElse(false) must beTrue
 
+    b.write("newPassword").into("input[name='password']")
+    b.write("happy").intoAll("input[type='text']")
 
   }
 

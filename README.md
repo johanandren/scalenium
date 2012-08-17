@@ -18,7 +18,8 @@ Setting up base object of library
 Everything in the API is available through the class com.markatta.scalenium.Browser
 
 You can create a Browser instance like this (of course you may use any other selenium driver):
-```
+```scala
+import com.markatta.scalenium._
 val browser = new Browser(new FirefoxDriver())
 ```
 
@@ -27,7 +28,8 @@ Selecting elements in a page
 
 Is done with a css selector, here are some samples of how it would look in specs2 tests
 
-```
+```scala
+import com.markatta.scalenium._
 val b: Browser = ...
 
 b.find(".cssClass") // returns a Seq[Element]
@@ -47,7 +49,7 @@ b.first(".someClass > .someOtherClass")
 // import com.markatta.scalenium.seqOfElements2ElementSeq
 // allowing us to:
 
-b.find("#cssId").allAreHidden must beTrue
+b.find(".cssClass").allAreHidden must beTrue
 b.find(".someClass > .someOtherClass").anyIsSelected must beTrue
 b.find("li").texts must contain("Banana", "Pineapple")
 b.find("ul").find("li").size must equalTo(4)
@@ -56,13 +58,23 @@ b.first("#it").isDefined must beTrue
 b.first("#it").map(_.isVisible).getOrElse(false) mustBeTrue
 ```
 
+Entering data into forms
+------------------------
+```scala
+import com.markatta.scalenium._
+val b: Browser = ...
+
+b.write("newPassword").into("input[name='password']")
+b.write("happy").intoAll("input[type='text']")
+```
+
 
 Waiting for asynchronous javascript logic
 -----------------------------------------
 In many cases we want to wait for some asynchronous operation for a while before
 failing a test:
 
-```
+```scala
 import com.markatta.scalenium._
 val b: Browser = ...
 

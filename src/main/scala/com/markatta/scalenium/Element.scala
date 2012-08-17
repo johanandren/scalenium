@@ -25,6 +25,7 @@ class Element(
   def name: String = this("name")
 
   def text: String = webElement.getText
+
   def html: String = this("innerHTML")
 
   def isEnabled: Boolean = webElement.isEnabled
