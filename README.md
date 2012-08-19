@@ -120,7 +120,7 @@ b.waitAtMost(5).secondsFor(b.find("button").allAreDisabled).toBecomeTrue
 ```
 
 The default timeout and polling interval can be provided with implicit values:
-```
+```scala
 import com.markatta.scalenium._
 
 implicit val timeout = Timeout(3).seconds
