@@ -15,4 +15,29 @@ trait Forms { this: MarkupSearch =>
       ))
     }
   }
+
+  /** Fill each field by name with the corresponding value
+    * @param vals name -> value
+    */
+  def fillByName(vals: (String, String)*) {
+    fill(vals, "name['" + _ + "']")
+  }
+
+  /** Fill each field by id with the corresponding value
+   * @param vals id -> value
+   */
+  def fillById(vals: (String, String)*) {
+    fill(vals, "#" + _)
+  }
+
+  /** Fill each field by css selector with the corresponding value
+    * @param vals cssSelector -> value
+    */
+  def fill(vals: (String, String)*) {
+    fill(vals, key => key)
+  }
+
+  private def fill(vals: Seq[(String, String)], f: String => String) {
+    vals.foreach { case (key, value) => find(f(key)).write(value)}
+  }
 }

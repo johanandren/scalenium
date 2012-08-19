@@ -51,13 +51,24 @@ class DslSpec extends Specification {
       implicit val brower = b
       import JqueryStyle._
       $("#someId").visible must beTrue
-      $("ul > li").find(_.text == "Banana").get.visible must beTrue
+      $("ul > li").find(li => li.text == "Banana" && li.visible).isDefined must beTrue
     }
 
     // ex 4
     {
       b.write("newPassword").into("input[name='password']")
       b.write("happy").intoAll("input[type='text']")
+
+      b.first("input[name='password']").get.write("newPassword")
+      b.find("input[name='password']").write("newPassword")
+
+      // fill entire form
+      // identifying fields with name
+      b.fillByName("user" -> "johndoe", "password" -> "newPasword")
+      // id
+      b.fillById("user" -> "johndoe", "password" -> "newPassword")
+      // or css selector
+      b.fill("input#user" -> "johndoe", "input[name='password']" -> "")
     }
 
     // ex 5

@@ -16,6 +16,12 @@ class ElementSeq(elements: Seq[Element]) {
     this.elements
   }
 
+  /** write the given text into all elements of the list */
+  def write(text: String): Seq[Element] = {
+    elements.foreach(_.write(text))
+    this.elements
+  }
+
   def ids: Seq[String] = elements.map(_.id)
 
   def texts: Seq[String] = elements.map(_.text)
