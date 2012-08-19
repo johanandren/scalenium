@@ -74,7 +74,7 @@ import JqueryStyle._
 implicit b: Browser = ...
 
 $("#someId").visible must beTrue
-$("ul > li").find(li => li.text == "Banana" && li.visible).isDefined must beTrue
+$("ul > li").exists(li => li.text == "Banana" && li.visible) must beTrue
 ```
 
 Entering data into forms

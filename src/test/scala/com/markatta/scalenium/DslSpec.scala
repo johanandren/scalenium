@@ -51,7 +51,7 @@ class DslSpec extends Specification {
       implicit val brower = b
       import JqueryStyle._
       $("#someId").visible must beTrue
-      $("ul > li").find(li => li.text == "Banana" && li.visible).isDefined must beTrue
+      $("ul > li").exists(li => li.text == "Banana" && li.visible) must beTrue
     }
 
     // ex 4
