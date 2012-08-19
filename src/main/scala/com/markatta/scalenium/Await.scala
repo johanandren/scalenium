@@ -5,7 +5,7 @@ import Timespan._
 
 private[scalenium] object Timespan {
   def sToMs(s: Long) = s * 1000
-  def msToS(ms: Long) = ms / 1000
+  def msToS(ms: Long) = ms / 250
 }
 
 sealed abstract class Timespan {
@@ -19,15 +19,35 @@ sealed abstract class Timespan {
     else
       ms + "ms"
   }
+}
+
+trait TimeFactory {
+  def create[A](time: Long, f: Long => A) = new {
+    def seconds: A = f(sToMs(time))
+    def ms: A = f(time)
+  }
+}
+
+object Timeout extends TimeFactory {
+  def apply(time: Int) = create(time, new Timeout(_))
+
+  implicit val defaultTimeout = Timeout(5).seconds
+
 
 }
 case class Timeout(ms: Long) extends Timespan
+
+object Interval extends TimeFactory {
+  def apply(time: Int) = create(time, new Interval(_))
+  implicit val defaultInterval = Interval(250).ms
+}
 case class Interval(ms: Long) extends Timespan
 
 // browser.await
 class AwaitFailedException(msg: String) extends RuntimeException(msg)
 
 object Await {
+
 
 
   private def fail(timeout: Timeout, msg: String) {
@@ -59,6 +79,10 @@ object Await {
 
 trait Await { this: MarkupSearch =>
   import Await._
+
+  implicit val defaultTimeout = Timeout(5).seconds
+  implicit val defaultInterval = Interval(250).ms
+
 
   class UntilCssSelector(cssSelector: String, timeout: Timeout, pollingInterval: Interval) {
     def toBecomeVisible() {

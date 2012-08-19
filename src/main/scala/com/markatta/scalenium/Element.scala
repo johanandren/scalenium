@@ -28,8 +28,8 @@ class Element(
 
   def html: String = this("innerHTML")
 
-  def isEnabled: Boolean = webElement.isEnabled
-  def isDisabled: Boolean = !isEnabled
+  def enabled: Boolean = webElement.isEnabled
+  def disabled: Boolean = !enabled
 
   /** @return is the element shown onscreen */
   def visible: Boolean = webElement.isDisplayed

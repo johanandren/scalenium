@@ -15,8 +15,9 @@ trait MarkupSearch { this: HasDriver with HasSearchContext =>
       case e: RuntimeException => Seq()
     }
 
-  /** alias for find */
+  // aliases for find
   def select(cssSelector: String) = find(cssSelector)
+  def all(cssSelector: String) = find(cssSelector)
 
   def first(cssSelector: String): Option[Element] = find(cssSelector).headOption
 

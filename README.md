@@ -1,7 +1,8 @@
 scalenium
 =========
 
-A Scala-ified fluent wrapper for selenium heavily inspired by FluentLenium but making use of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
+A Scala-ified fluent wrapper for selenium webdriver heavily inspired by FluentLenium but making use
+of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
 
 
 Using the library
@@ -35,7 +36,13 @@ val b: Browser = ...
 b.find(".cssClass") // returns a Seq[Element]
 b.first(".cssClass") // returns an Option[Element]
 
+// aliases to find, for an additional style, see the JQuery syntax example below
+b.all(".cssClass")
+b.select(".cssClass")
+
+// use regular scala collection API ops
 b.find(".someClass").isEmpty must beTrue
+b.find(".someClass") must haveSize(0)
 b.first(".someClass").isEmpty must beTrue
 b.find(".someClass").exists(_.id == "someId") must beTrue
 b.find(".someClass").size must equalTo(3)
@@ -46,16 +53,28 @@ b.first(".someClass").get.first(".someOtherClass")
 b.first(".someClass > .someOtherClass")
 
 // Seq[Element] is implicitly converted to an ElementSeq by
-// import com.markatta.scalenium.seqOfElements2ElementSeq
+// com.markatta.scalenium.seqOfElements2ElementSeq
 // allowing us to:
 
-b.find(".cssClass").allAreHidden must beTrue
-b.find(".someClass > .someOtherClass").anyIsSelected must beTrue
+b.find(".cssClass").hidden must beTrue // all elements matching .cssClass hidden
+b.find(".someClass > .someOtherClass").anySelected must beTrue
 b.find("li").texts must contain("Banana", "Pineapple")
 b.find("ul").find("li").size must equalTo(4)
 
 b.first("#it").isDefined must beTrue
-b.first("#it").map(_.isVisible).getOrElse(false) mustBeTrue
+b.first("#it").map(_.visible).getOrElse(false) must beTrue
+```
+
+JQuery style selection
+----------------------
+It is also possible to do selects with a jquery flavored syntax, which will use an implicit browser for searching:
+```scala
+import com.markatta.scalenium._
+import JqueryStyle._
+implicit b: Browser = ...
+
+$("#someId").visible must beTrue
+$("ul > li").find(_.text == "Banana").get.visible must beTrue
 ```
 
 Entering data into forms
@@ -72,7 +91,7 @@ b.write("happy").intoAll("input[type='text']")
 Waiting for asynchronous javascript logic
 -----------------------------------------
 In many cases we want to wait for some asynchronous operation for a while before
-failing a test:
+failing a test, the default timeout is 5 seconds, polling every 250ms:
 
 ```scala
 import com.markatta.scalenium._
@@ -85,4 +104,14 @@ b.waitFor(1 == 2).toBecomeTrue()
 b.waitAtMost(3000000).secondsFor(1 == 2).toBecomeTrue
 
 b.waitAtMost(5).secondsFor(b.find("button").allAreDisabled).toBecomeTrue
+```
+
+The default timeout and polling interval can be provided with implicit values:
+```
+import com.markatta.scalenium._
+
+implicit val timeout = Timeout(3).seconds
+implicit val interval = Interval(100).ms
+
+b.waitFor(".someClass").toBecomeVisible()
 ```
