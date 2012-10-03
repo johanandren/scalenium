@@ -49,7 +49,10 @@ class AwaitFailedException(msg: String) extends RuntimeException(msg)
 object Await {
 
 
-
+  // TODO: investigate the use the org.specs2.matcher.ThrownMessages trait to 
+  // throw FailureExceptions which will be reported as a failure instead of throwing 
+  // an exception which will be interpreted as an error 
+  // (and displayed with a full stacktrace by default)
   private def fail(timeout: Timeout, msg: String) {
     throw new AwaitFailedException("Waited " + timeout.humanText + " but " + msg)
   }
