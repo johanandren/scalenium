@@ -61,8 +61,8 @@ b.find(".someClass > .someOtherClass").anySelected must beTrue
 b.find("li").texts must contain("Banana", "Pineapple")
 b.find("ul").find("li").size must equalTo(4)
 
-b.first("#it").isDefined must beTrue
-b.first("#it").map(_.visible).getOrElse(false) must beTrue
+b.first("#it") must beSome
+b.first("#it").map(_.visible) must beSome(true)
 ```
 
 JQuery style selection
