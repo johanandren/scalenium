@@ -19,6 +19,7 @@ trait MarkupSearch { this: HasDriver with HasSearchContext =>
   def select(cssSelector: String) = find(cssSelector)
   def all(cssSelector: String) = find(cssSelector)
 
+  // TODO: figure out a way to keep the selector in the option so that we can say what selection failed on None.get
   def first(cssSelector: String): Option[Element] = find(cssSelector).headOption
 
 }

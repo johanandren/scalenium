@@ -44,6 +44,8 @@ class DslSpec extends Specification {
 
       b.first("#it") must beSome
       b.first("#it").map(_.visible) must beSome(true)
+
+      b.first("#doIt").foreach(_.click())
     }
 
     // ex 3
@@ -74,7 +76,7 @@ class DslSpec extends Specification {
     // ex 5
     {
       // to get specs2 failures instead of exceptions
-      import Specs2Integration.specs2FailureHandler
+      implicit val failureHandler = Specs2Integration.specs2FailureHandler
 
       b.waitFor(".someClass").toBecomeVisible()
       b.waitAtMost(5).secondsFor(".someClass").toBecomeVisible()

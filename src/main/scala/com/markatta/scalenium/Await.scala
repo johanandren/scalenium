@@ -54,40 +54,6 @@ object Interval extends TimeFactory {
 }
 case class Interval(ms: Long) extends Timespan
 
-// browser.await
-class AwaitFailedException(msg: String) extends RuntimeException(msg)
-
-object FailureHandler {
-
-
-  // TODO: investigate the use the org.specs2.matcher.ThrownMessages trait to
-  // throw FailureExceptions which will be reported as a failure instead of throwing
-  // an exception which will be interpreted as an error
-  // (and displayed with a full stacktrace by default)
-
-
-  /** default simple failure handler, will throw an [[com.markatta.scalenium.AwaitFailedException]],
-    * see [[com.markatta.scalenium.Specs2Integration]] for an example of
-    * testing framework integration */
-  val simpleFailureHandler = new FailureHandler {
-
-    def fail(timeout: Timeout, msg: String) {
-      throw new AwaitFailedException("Waited " + timeout.humanText + " but " + msg)
-    }
-  }
-
-  implicit val defaultFailureHandler = FailureHandler.simpleFailureHandler
-
-}
-
-/** Allows for customization of how failures are handled to adapt
-  * the library to a specific testing framework.
-  */
-trait FailureHandler {
-  def fail(timeout: Timeout, msg: String)
-}
-
-
 object Await {
 
   /** Run until check returns true or timeout from now is passed
@@ -122,12 +88,12 @@ trait Await { this: MarkupSearch =>
 
 
   class UntilCssSelector(cssSelector: String, timeout: Timeout, pollingInterval: Interval) {
-    def toBecomeVisible()(implicit failureHandler: FailureHandler) {
+    def toBecomeVisible[A]()(implicit failureHandler: TimeoutFailureHandler) {
       if (!becameTrue(timeout, pollingInterval, first(cssSelector).isDefined)) {
         failureHandler.fail(timeout, "element matching '" + cssSelector + "' never became visible")
       }
     }
-    def toDisappear()(implicit failureHandler: FailureHandler) {
+    def toDisappear()(implicit failureHandler: TimeoutFailureHandler) {
       if (!becameTrue(timeout, pollingInterval, first(cssSelector).isDefined)) {
         failureHandler.fail(timeout, "element matching '" + cssSelector + "' never disappeared")
       }
@@ -135,12 +101,12 @@ trait Await { this: MarkupSearch =>
   }
 
   class UntilPredicate(predicate: => Boolean, timeout: Timeout, pollingInterval: Interval) {
-    def toBecomeTrue()(implicit failureHandler: FailureHandler) {
+    def toBecomeTrue()(implicit failureHandler: TimeoutFailureHandler) {
       if (!becameTrue(timeout, pollingInterval, predicate)) {
         failureHandler.fail(timeout, "expression never became true")
       }
     }
-    def toBecomeFalse()(implicit failureHandler: FailureHandler) {
+    def toBecomeFalse()(implicit failureHandler: TimeoutFailureHandler) {
       if (!becameTrue(timeout, pollingInterval, !predicate)) {
         failureHandler.fail(timeout, "expression never became false")
       }

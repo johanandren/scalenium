@@ -4,6 +4,9 @@ scalenium
 A Scala-ified fluent wrapper for selenium webdriver heavily inspired by FluentLenium but making use
 of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
 
+Please note that this library is still a proof of concept and playground for various ideas of how
+a selenium API in scala should look.
+
 
 Using the library
 -----------------
@@ -130,6 +133,30 @@ implicit val timeout = Timeout(3).seconds
 implicit val interval = Interval(100).ms
 
 b.waitFor(".someClass").toBecomeVisible()
+```
+
+Error handling
+--------------
+TODO not so sure about this, should the error handling be set on the browser object instead, it will probably not need to change in the same browser??
+
+Error handling is done by implicit implementations of the various XxxFailureHandler traits,
+the defaults throw exceptions defined in the library which might not suit any given test framework
+or your use case so good. Therefore you can define your own or use another set of predefined
+failure handlers by defining them as implicits closer to where you use the framework.
+
+Example
+```scala
+// to get specs2 test failures instead of exceptions
+import Specs2Integration.specs2FailureHandler // <- defined as an "implicit object"
+
+... use API:s ...
+```
+
+or
+```scala
+implicit val customHandler = new MissingElementFailureHandler { ... }
+
+... use API:s ...
 ```
 
 

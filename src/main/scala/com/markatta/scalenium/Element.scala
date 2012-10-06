@@ -3,7 +3,7 @@ package com.markatta.scalenium
 import org.openqa.selenium.{Dimension, WebElement, WebDriver}
 import org.openqa.selenium.interactions.Actions
 
-class MissingElementException(message: String, cause: Throwable) extends RuntimeException(message, cause)
+
 
 class Element(
      cssSelector: String,
@@ -42,45 +42,49 @@ class Element(
   /** @return onscreen dimensions of the element */
   def size: Dimension = webElement.getSize
 
-  def write(text: String): Either[MissingElementException, Element] = {
+  def write(text: String)(implicit failureHandler: MissingElementFailureHandler): Element = {
     operationAsEither {
       clear()
       webElement.sendKeys(text)
-    }
+    }(failureHandler)
   }
 
-  def clear(): Either[MissingElementException, Element] = {
+  def clear()(implicit failureHandler: MissingElementFailureHandler): Element = {
     operationAsEither {
       webElement.clear()
-    }
+    }(failureHandler)
   }
 
-  def click(): Either[MissingElementException, Element] = {
+  def click()(implicit failureHandler: MissingElementFailureHandler): Element = {
     operationAsEither {
       webElement.click()
-    }
+    }(failureHandler)
   }
 
-  def doubleClick(): Either[MissingElementException, Element] = {
+  def doubleClick()(implicit failureHandler: MissingElementFailureHandler): Element = {
     operationAsEither {
       val action = new Actions(driver).doubleClick(webElement).build()
       action.perform()
-    }
+    }(failureHandler)
   }
 
   /** submit the form that the element belongs to, if the element is a form element */
-  def submit(): Either[MissingElementException, Element] = {
+  def submit()(implicit failureHandler: MissingElementFailureHandler): Element = {
     operationAsEither {
       webElement.click()
-    }
+    }(failureHandler)
   }
 
-  private def operationAsEither(b: => Any): Either[MissingElementException, Element] = {
+  private def operationAsEither(b: => Any)(failureHandler: MissingElementFailureHandler): Element = {
     try {
       b
-      Right(this)
+      this
     } catch {
-      case e: NoSuchElementException => Left(new MissingElementException("Element matching expression '" + cssSelector + "' not found", e))
+      case e: NoSuchElementException => {
+        failureHandler.noSuchElement(cssSelector)
+        // we will never get here because all failure handlers will throw exceptions!
+        this
+      }
     }
   }
 

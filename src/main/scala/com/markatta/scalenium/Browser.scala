@@ -2,6 +2,10 @@ package com.markatta.scalenium
 
 import org.openqa.selenium._
 
+/**
+ * Represents the browser, use it to do stuff you do with your browser, but automated.
+ * @param driver Selenium WebDriver to use as backend
+ */
 class Browser(protected val driver: WebDriver)
   extends HasDriver
   with HasSearchContext
@@ -25,9 +29,5 @@ class Browser(protected val driver: WebDriver)
   def quit() {
     driver.quit()
   }
-
-}
-
-object Browser {
 
 }

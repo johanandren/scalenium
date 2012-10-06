@@ -1,29 +1,39 @@
 package com.markatta.scalenium
 
+/**
+ * Useful operations you might want to perform on a Seq of Element
+ *
+ * @param elements decorated seq
+ */
 class ElementSeq(elements: Seq[Element]) {
 
-  /** Click on all elements on the list
-    * Only the visible elements are filled
+  /** Click on all elements on the list.
+    * Only the visible elements are filled, if no elements are visible
+    * nothing happens.
     */
-  def click(): Seq[Element] = {
+  def click()(implicit failureHandler: MissingElementFailureHandler): Seq[Element] = {
     elements.foreach(_.click())
     this.elements
   }
 
-  /** Clear all visible elements in the list */
-  def clearAll(): Seq[Element] = {
+  /** Clear all visible elements in the list,
+    * if no elements are visible
+    * nothing happens. */
+  def clearAll()(implicit failureHandler: MissingElementFailureHandler): Seq[Element] = {
     elements.filter(_.visible).foreach(_.clear())
     this.elements
   }
 
   /** write the given text into all elements of the list */
-  def write(text: String): Seq[Element] = {
+  def write(text: String)(implicit failureHandler: MissingElementFailureHandler): Seq[Element] = {
     elements.foreach(_.write(text))
     this.elements
   }
 
+  /** @return all element ids */
   def ids: Seq[String] = elements.map(_.id)
 
+  /** @return all element text contents */
   def texts: Seq[String] = elements.map(_.text)
   /** @return the text content of all elements concatenated into one string */
   def text: String = elements.map(_.text).mkString
