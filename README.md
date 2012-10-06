@@ -110,6 +110,9 @@ failing a test, the default timeout is 5 seconds, polling every 250ms:
 import com.markatta.scalenium._
 val b: Browser = ...
 
+// to get specs2 test failures instead of exceptions
+import Specs2Integration.specs2FailureHandler
+
 b.waitFor(".someClass").toBecomeVisible()
 b.waitAtMost(5).secondsFor(".someClass").toBecomeVisible()
 
