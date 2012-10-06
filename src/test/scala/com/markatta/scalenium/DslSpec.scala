@@ -42,8 +42,8 @@ class DslSpec extends Specification {
       b.find("li").texts must contain("Banana", "Pineapple")
       b.find("ul").find("li").size must equalTo(4)
 
-      b.first("#it").isDefined must beTrue
-      b.first("#it").map(_.visible).getOrElse(false) must beTrue
+      b.first("#it") must beSome
+      b.first("#it").map(_.visible) must beSome(true)
     }
 
     // ex 3
@@ -73,6 +73,9 @@ class DslSpec extends Specification {
 
     // ex 5
     {
+      // to get specs2 failures instead of exceptions
+      import Specs2Integration.specs2FailureHandler
+
       b.waitFor(".someClass").toBecomeVisible()
       b.waitAtMost(5).secondsFor(".someClass").toBecomeVisible()
 
