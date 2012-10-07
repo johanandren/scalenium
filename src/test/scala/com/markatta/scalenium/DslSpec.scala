@@ -96,6 +96,4 @@ class DslSpec extends Specification {
     }
   }
 
-  // TODO figure out how to create tests for the library
-
 }
