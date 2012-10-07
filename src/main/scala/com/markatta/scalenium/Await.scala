@@ -2,7 +2,6 @@ package com.markatta.scalenium
 
 import annotation.tailrec
 import Timespan._
-import org.specs2.execute.{Failure, FailureException}
 
 private[scalenium] object Timespan {
   def sToMs(s: Long) = s * 1000
