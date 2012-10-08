@@ -3,56 +3,6 @@ package com.markatta.scalenium
 import annotation.tailrec
 import Timespan._
 
-private[scalenium] object Timespan {
-  def sToMs(s: Long) = s * 1000
-  def msToS(ms: Long) = ms / 250
-}
-
-sealed abstract class Timespan {
-
-  def ms: Long
-  def seconds: Long = msToS(ms)
-  def humanText = {
-    val asSeconds = seconds
-    if (seconds > 0)
-      asSeconds + "s"
-    else
-      ms + "ms"
-  }
-}
-
-trait TimeFactory {
-
-  def create[A](time: Long, f: Long => A) = new {
-    def seconds: A = f(sToMs(time))
-    def ms: A = f(time)
-  }
-}
-
-object Timeout extends TimeFactory {
-
-  /**
-   * Sample usage:
-   * {{{
-   *   val timeout = Timeout(5).seconds
-   *   val shorter = Timeout(10).ms
-   * }}}
-   *
-   * @param time the time in sme unit
-   * @return An object on which you can specify the unit of the time
-   */
-  def apply(time: Int) = create(time, new Timeout(_))
-
-  implicit val defaultTimeout = Timeout(5).seconds
-}
-case class Timeout(ms: Long) extends Timespan
-
-object Interval extends TimeFactory {
-  def apply(time: Int) = create(time, new Interval(_))
-  implicit val defaultInterval = Interval(250).ms
-}
-case class Interval(ms: Long) extends Timespan
-
 object Await {
 
   /** Run until check returns true or timeout from now is passed
@@ -121,10 +71,10 @@ trait Await { this: MarkupSearch =>
 
   // explicit timeouts
   def waitAtMost(n: Long) = new {
-    def secondsFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, Timeout(sToMs(n)), interval)
-    def secondsFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, Timeout(sToMs(n)), interval)
-    def msFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, Timeout(n), interval)
-    def msFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, Timeout(n), interval)
+    def secondsFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(sToMs(n)), interval)
+    def secondsFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(sToMs(n)), interval)
+    def msFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(n), interval)
+    def msFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(n), interval)
   }
 
 }
