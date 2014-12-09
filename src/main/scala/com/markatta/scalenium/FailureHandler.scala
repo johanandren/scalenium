@@ -14,7 +14,7 @@ class AwaitFailedException(msg: String) extends RuntimeException(msg)
 object SimpleFailureHandler extends MissingElementFailureHandler with TimeoutFailureHandler {
 
   def fail(timeout: Timeout, msg: String) {
-    throw new AwaitFailedException("Waited " + timeout.humanText + " but " + msg)
+    throw new AwaitFailedException("Waited " + Time.humanText(timeout.inner) + " but " + msg)
   }
 
   /** fail with an explanation */

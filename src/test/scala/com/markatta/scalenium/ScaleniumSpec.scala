@@ -17,12 +17,12 @@ class ScaleniumSpec extends Specification {
   "markup search" should {
 
     "find elements from css selector" in { withBrowser { browser =>
-        browser.find("h1").size shouldEqual (1)
-        browser.find("ul").size shouldEqual (1)
-        browser.find("li").size shouldEqual (2)
-        browser.find("li").size shouldEqual (2)
-        browser.all("li").size shouldEqual (2)
-        browser.select("li").size shouldEqual (2)
+        browser.find("h1") should haveSize (1)
+        browser.find("ul") should haveSize (1)
+        browser.find("li") should haveSize (2)
+        browser.find("li") should haveSize (2)
+        browser.all("li") should haveSize (2)
+        browser.select("li") should haveSize (2)
         browser.first("li") should beSome
       }
     }
@@ -34,7 +34,7 @@ class ScaleniumSpec extends Specification {
     }
   }
 
-  def withBrowser(testBlock: Browser => Unit) = {
+  def withBrowser[T](testBlock: Browser => T): T = {
     val browser = new Browser(new HtmlUnitDriver())
     browser.goTo("http://localhost:8080/test")
     testBlock(browser)

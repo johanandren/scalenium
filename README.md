@@ -128,12 +128,16 @@ b.waitAtMost(5).secondsFor(b.find("button").allAreDisabled).toBecomeTrue
 The default timeout and polling interval can be provided with implicit values:
 ```scala
 import com.markatta.scalenium._
+import scala.concurrent.duration._
 
-implicit val timeout = Timeout(3).seconds
-implicit val interval = Interval(100).ms
+implicit val timeout = Timeout(3.seconds)
+implicit val interval = Interval(100.millis)
 
 b.waitFor(".someClass").toBecomeVisible()
 ```
+
+Note that you need to mix in NoTimeConversions into your test spec or else the Specs2 time unit classes
+will interfere with the scala.concurrent.duration time units.
 
 Error handling
 --------------

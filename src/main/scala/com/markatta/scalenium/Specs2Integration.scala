@@ -19,7 +19,7 @@ object Specs2Integration {
     }
 
     def fail(timeout: Timeout, msg: String) {
-      throw new FailureException(Failure("Waited " + timeout.humanText + " but " + msg))
+      throw new FailureException(Failure("Waited " + Time.humanText(timeout.inner) + " but " + msg))
     }
 
   }

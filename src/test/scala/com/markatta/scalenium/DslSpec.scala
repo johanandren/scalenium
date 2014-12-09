@@ -2,8 +2,10 @@ package com.markatta.scalenium
 
 import org.specs2.mutable.Specification
 import org.openqa.selenium.firefox.FirefoxDriver
+import org.specs2.time.NoTimeConversions
+import scala.concurrent.duration._
 
-class DslSpec extends Specification {
+class DslSpec extends Specification with NoTimeConversions {
 
   def mustCompile {
     // copy of the examples in the README, must compile
@@ -89,8 +91,8 @@ class DslSpec extends Specification {
 
     // ex 6
     {
-      implicit val timeout = Timeout(3).seconds
-      implicit val interval = Interval(100).ms
+      implicit val timeout = Timeout(3.seconds)
+      implicit val interval = Interval(100.millis)
 
       b.waitFor(".someClass").toBecomeVisible()
     }

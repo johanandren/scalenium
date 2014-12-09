@@ -1,7 +1,7 @@
 package com.markatta.scalenium
 
-import annotation.tailrec
-import Timespan._
+import scala.concurrent.duration._
+import scala.annotation.tailrec
 
 object Await {
 
@@ -9,21 +9,21 @@ object Await {
     * @return
     */
   private def becameTrue(timeout: Timeout, interval: Interval, check: => Boolean): Boolean = {
-    val end = System.currentTimeMillis + timeout.ms
+    val end = System.currentTimeMillis + timeout.inner.toMillis
 
     @tailrec
-    def loop(until: Long, interval: Long, predicate: => Boolean): Boolean = {
+    def loop(until: Long, interval: FiniteDuration, predicate: => Boolean): Boolean = {
       if (System.currentTimeMillis() > end) {
         false
       } else if (predicate) {
         true
       } else {
-        Thread.sleep(interval)
+        Thread.sleep(interval.toMillis)
         loop(until, interval, predicate)
       }
     }
 
-    loop(end, interval.ms, check)
+    loop(end, interval.inner, check)
   }
 
 }
@@ -31,9 +31,8 @@ object Await {
 trait Await { this: MarkupSearch =>
   import Await._
 
-  implicit val defaultTimeout = Timeout(5).seconds
-  implicit val defaultInterval = Interval(250).ms
-
+  implicit val defaultTimeout = Timeout(5.seconds)
+  implicit val defaultInterval = Interval(250.millis)
 
 
   class UntilCssSelector(cssSelector: String, timeout: Timeout, pollingInterval: Interval) {
@@ -70,11 +69,13 @@ trait Await { this: MarkupSearch =>
     new UntilCssSelector(cssSelector, timeout, interval)
 
   // explicit timeouts
-  def waitAtMost(n: Long) = new {
-    def secondsFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(sToMs(n)), interval)
-    def secondsFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(sToMs(n)), interval)
-    def msFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(n), interval)
-    def msFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(n), interval)
+  class WaitAtMostBuilder private[Await](n: Long) {
+    def secondsFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(n.seconds), interval)
+    def secondsFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(n.seconds), interval)
+    def msFor(predicate: => Boolean)(implicit interval: Interval) = new UntilPredicate(predicate, new Timeout(n.millis), interval)
+    def msFor(cssSelector: String)(implicit interval: Interval) = new UntilCssSelector(cssSelector, new Timeout(n.millis), interval)
+
   }
+  def waitAtMost(n: Long) = new WaitAtMostBuilder(n)
 
 }

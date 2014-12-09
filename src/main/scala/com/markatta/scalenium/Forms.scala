@@ -2,8 +2,7 @@ package com.markatta.scalenium
 
 trait Forms { this: MarkupSearch =>
 
-  def write(text: String) = new {
-
+  final class FieldWriter private[Forms](text: String) {
     def into(cssSelector: String)(implicit failureHandler: MissingElementFailureHandler) {
       first(cssSelector).map(_.write(text))
     }
@@ -12,6 +11,8 @@ trait Forms { this: MarkupSearch =>
       find(cssSelector).foreach(_.write(text))
     }
   }
+
+  final def write(text: String): FieldWriter = new FieldWriter(text)
 
   /** Fill each field by name with the corresponding value
     * @param vals name -> value
