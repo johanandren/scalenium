@@ -43,7 +43,7 @@ trait Await { this: MarkupSearch =>
       }
     }
     def toDisappear()(implicit failureHandler: TimeoutFailureHandler) {
-      if (!becameTrue(timeout, pollingInterval, first(cssSelector).isDefined)) {
+      if (!becameTrue(timeout, pollingInterval, first(cssSelector).isEmpty)) {
         failureHandler.fail(timeout, "element matching '" + cssSelector + "' never disappeared")
       }
     }
