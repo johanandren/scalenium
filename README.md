@@ -1,5 +1,6 @@
 scalenium
 =========
+[![Build Status](https://travis-ci.org/johanandren/scalenium.svg?branch=master)](https://travis-ci.org/johanandren/scalenium)
 
 A Scala-ified fluent wrapper for selenium webdriver heavily inspired by FluentLenium but making use
 of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
