@@ -12,7 +12,14 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.4.15"
 )
 
-resolvers += "releases" at "http://oss.sonatype.org/content/repositories/releases"
+
+
+resolvers ++= Seq(
+  "releases" at "http://oss.sonatype.org/content/repositories/releases",
+   // required for the scalaz-streams dependency from specs2 :(
+  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+)
+
 
 initialCommands := """
 import com.markatta.scalenium._
