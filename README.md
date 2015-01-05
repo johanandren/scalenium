@@ -12,13 +12,17 @@ a selenium API in scala should look.
 Using the library
 -----------------
 
+Include bintray plugin to your project/plugins.sbt
 ```scala
-//note: bintray organization will be changed in the Future
-resolvers += bintray.Opts.resolver.repo("denigma", "denigma-releases")
+addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.2")
+```
+
+Add scalenium to your dependencies
+```scala
+resolvers += bintray.Opts.resolver.repo("markatta", "markatta-releases")
 
 libraryDependencies += "com.markatta" %%% "scalenium" % "1.0"
 ```
-
 
 Setting up base object of library
 ---------------------------------

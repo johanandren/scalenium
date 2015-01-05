@@ -15,9 +15,9 @@ object Build extends sbt.Build
   protected val bintrayPublishIvyStyle = settingKey[Boolean]("=== !publishMavenStyle") //workaround for sbt-bintray bug
 
   lazy val publishSettings = bintraySettings ++ Seq(
-    repository in bintray := "denigma-releases",
+    repository in bintray := "markatta-releases",
 
-    bintrayOrganization in bintray := Some("denigma"),
+    bintrayOrganization in bintray := Some("markatta"),
 
     licenses += ("MPL-2.0", url("http://opensource.org/licenses/MPL-2.0")),
 
