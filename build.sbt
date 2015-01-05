@@ -1,6 +1,6 @@
 name := "scalenium"
 
-version := "1.0"
+version := "1.0.1-SNAPSHOT"
 
 organization := "com.markatta"
 
