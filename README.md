@@ -12,9 +12,12 @@ a selenium API in scala should look.
 Using the library
 -----------------
 
-TODO publish artifact to repo on github so it can be used through sbt etc.
+```scala
+//note: bintray organization will be changed in the Future
+resolvers += bintray.Opts.resolver.repo("denigma", "denigma-releases")
 
-For now, you'll have to clone, build and use the built jar
+libraryDependencies += "com.markatta" %%% "scalenium" % "1.0"
+```
 
 
 Setting up base object of library
