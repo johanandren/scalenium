@@ -19,7 +19,7 @@ object Build extends sbt.Build
 
     bintrayOrganization in bintray := Some("markatta"),
 
-    licenses += ("MPL-2.0", url("http://opensource.org/licenses/MPL-2.0")),
+    licenses += ("Apache License-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
 
     bintrayPublishIvyStyle := true
   )
