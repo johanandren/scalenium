@@ -3,7 +3,7 @@ package com.markatta.scalenium
 import org.openqa.selenium.{Dimension, WebElement, WebDriver}
 import org.openqa.selenium.interactions.Actions
 
-class Element(
+final class Element private[scalenium](
      cssSelector: String,
      protected val driver: WebDriver,
      val webElement: WebElement)

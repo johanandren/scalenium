@@ -5,8 +5,8 @@ package com.markatta.scalenium
  * the library to a specific testing framework.
  */
 
-class MissingElementException(message: String) extends RuntimeException(message)
-class AwaitFailedException(msg: String) extends RuntimeException(msg)
+final class MissingElementException(message: String) extends RuntimeException(message)
+final class AwaitFailedException(msg: String) extends RuntimeException(msg)
 
 /** default simple failure handler, will throw an [[com.markatta.scalenium.AwaitFailedException]],
   * see [[com.markatta.scalenium.Specs2Integration]] for an example of

@@ -5,7 +5,7 @@ package com.markatta.scalenium
  *
  * @param elements decorated seq
  */
-class ElementSeq(elements: Seq[Element]) {
+final class ElementSeq private[scalenium] (elements: Seq[Element]) {
 
   /** Click on all elements on the list.
     * Only the visible elements are filled, if no elements are visible
