@@ -14,11 +14,11 @@ object Specs2Integration {
    */
   implicit object specs2FailureHandler extends MissingElementFailureHandler with TimeoutFailureHandler {
 
-    def noSuchElement(msg: String) {
+    def noSuchElement(msg: String): Unit = {
       throw new FailureException(Failure(msg))
     }
 
-    def fail(timeout: Timeout, msg: String) {
+    def fail(timeout: Timeout, msg: String): Unit = {
       throw new FailureException(Failure("Waited " + Time.humanText(timeout.inner) + " but " + msg))
     }
 

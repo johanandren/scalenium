@@ -21,12 +21,12 @@ class Browser(protected val driver: WebDriver)
   def searchContext = driver
 
   /** close the current window, quit of no windows left */
-  def close() {
+  def close(): Unit =  {
     driver.close()
   }
 
   /** shut down the selenium browser */
-  def quit() {
+  def quit(): Unit =  {
     driver.quit()
   }
 

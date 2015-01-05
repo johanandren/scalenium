@@ -13,12 +13,12 @@ class AwaitFailedException(msg: String) extends RuntimeException(msg)
   * testing framework integration */
 object SimpleFailureHandler extends MissingElementFailureHandler with TimeoutFailureHandler {
 
-  def fail(timeout: Timeout, msg: String) {
+  def fail(timeout: Timeout, msg: String): Unit =  {
     throw new AwaitFailedException("Waited " + Time.humanText(timeout.inner) + " but " + msg)
   }
 
   /** fail with an explanation */
-  def noSuchElement(msg: String) {
+  def noSuchElement(msg: String): Unit =  {
     throw new MissingElementException(msg)
   }
 }
@@ -35,7 +35,7 @@ trait MissingElementFailureHandler {
    * @param elementSelector The css selector that was missing
    * @return
    */
-  def noSuchElement(elementSelector: String)
+  def noSuchElement(elementSelector: String): Unit
 }
 
 object TimeoutFailureHandler {
@@ -49,6 +49,6 @@ trait TimeoutFailureHandler {
    * @param message
    * @return
    */
-  def fail(timeout: Timeout, message: String)
+  def fail(timeout: Timeout, message: String): Unit
 }
 

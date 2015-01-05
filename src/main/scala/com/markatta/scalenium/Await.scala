@@ -36,12 +36,12 @@ trait Await { this: MarkupSearch =>
 
 
   class UntilCssSelector(cssSelector: String, timeout: Timeout, pollingInterval: Interval) {
-    def toBecomeVisible[A]()(implicit failureHandler: TimeoutFailureHandler) {
+    def toBecomeVisible[A]()(implicit failureHandler: TimeoutFailureHandler): Unit =  {
       if (!becameTrue(timeout, pollingInterval, first(cssSelector).isDefined)) {
         failureHandler.fail(timeout, "element matching '" + cssSelector + "' never became visible")
       }
     }
-    def toDisappear()(implicit failureHandler: TimeoutFailureHandler) {
+    def toDisappear()(implicit failureHandler: TimeoutFailureHandler): Unit =  {
       if (!becameTrue(timeout, pollingInterval, first(cssSelector).isEmpty)) {
         failureHandler.fail(timeout, "element matching '" + cssSelector + "' never disappeared")
       }
@@ -49,12 +49,12 @@ trait Await { this: MarkupSearch =>
   }
 
   class UntilPredicate(predicate: => Boolean, timeout: Timeout, pollingInterval: Interval) {
-    def toBecomeTrue()(implicit failureHandler: TimeoutFailureHandler) {
+    def toBecomeTrue()(implicit failureHandler: TimeoutFailureHandler): Unit = {
       if (!becameTrue(timeout, pollingInterval, predicate)) {
         failureHandler.fail(timeout, "expression never became true")
       }
     }
-    def toBecomeFalse()(implicit failureHandler: TimeoutFailureHandler) {
+    def toBecomeFalse()(implicit failureHandler: TimeoutFailureHandler): Unit =  {
       if (!becameTrue(timeout, pollingInterval, !predicate)) {
         failureHandler.fail(timeout, "expression never became false")
       }
