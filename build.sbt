@@ -28,9 +28,14 @@ import com.markatta.scalenium._
 val browser = new Browser(new org.openqa.selenium.htmlunit.HtmlUnitDriver)
 """
 
+// release configuration
 seq(bintraySettings:_*)
 
 publishMavenStyle := true
+
+repository := "markatta-releases"
+
+bintrayOrganization := Some("markatta")
 
 packageLabels := Seq("scala", "testing", "web")
 
