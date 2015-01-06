@@ -19,9 +19,7 @@ addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.2")
 
 Add scalenium to your dependencies
 ```scala
-resolvers += bintray.Opts.resolver.repo("markatta", "markatta-releases")
-
-libraryDependencies += "com.markatta" %%% "scalenium" % "1.0"
+libraryDependencies += "com.markatta" %% "scalenium" % "1.0.1"
 ```
 
 Setting up base object of library

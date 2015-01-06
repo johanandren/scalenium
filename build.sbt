@@ -1,6 +1,9 @@
+import bintray.Plugin._
+import bintray.Keys._
+
 name := "scalenium"
 
-version := "1.0.1-SNAPSHOT"
+version := "1.0.1"
 
 organization := "com.markatta"
 
@@ -14,16 +17,22 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.4.15"
 )
 
-
-
 resolvers ++= Seq(
   "releases" at "http://oss.sonatype.org/content/repositories/releases",
    // required for the scalaz-streams dependency from specs2 :(
   "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 )
 
-
 initialCommands := """
 import com.markatta.scalenium._
 val browser = new Browser(new org.openqa.selenium.htmlunit.HtmlUnitDriver)
 """
+
+seq(bintraySettings:_*)
+
+publishMavenStyle := true
+
+packageLabels := Seq("scala", "testing", "web")
+
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
+
