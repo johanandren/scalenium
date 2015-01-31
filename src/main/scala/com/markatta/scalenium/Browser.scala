@@ -22,7 +22,7 @@ final class Browser(protected val driver: WebDriver)
   with Await
   with Forms {
 
-  def searchContext = driver
+  override val searchContext = driver
 
   /** close the current window, quit of no windows left */
   def close(): Unit =  {
