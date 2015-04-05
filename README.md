@@ -12,12 +12,8 @@ a selenium API in scala should look.
 Using the library
 -----------------
 
-Include bintray plugin to your project/plugins.sbt
-```scala
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.2")
-```
+Scalenium is available from maven central, just add it Scalenium to your dependencies:
 
-Add scalenium to your dependencies
 ```scala
 libraryDependencies += "com.markatta" %% "scalenium" % "1.0.1"
 ```

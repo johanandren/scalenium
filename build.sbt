@@ -1,5 +1,4 @@
-import bintray.Plugin._
-import bintray.Keys._
+import de.heikoseeberger.sbtheader.license.Apache2_0
 
 name := "scalenium"
 
@@ -18,7 +17,6 @@ libraryDependencies ++= Seq(
 )
 
 resolvers ++= Seq(
-  "releases" at "http://oss.sonatype.org/content/repositories/releases",
    // required for the scalaz-streams dependency from specs2 :(
   "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 )
@@ -28,16 +26,31 @@ import com.markatta.scalenium._
 val browser = new Browser(new org.openqa.selenium.htmlunit.HtmlUnitDriver)
 """
 
-// release configuration
-seq(bintraySettings:_*)
-
+// releasing
+sonatypeSettings
+licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+homepage := Some(url("https://github.com/johanandren/scalenium"))
 publishMavenStyle := true
+publishArtifact in Test := false
+pomIncludeRepository := { _ => false }
+publishTo := Some {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    "snapshots" at nexus + "content/repositories/snapshots"
+  else
+    "releases" at nexus + "service/local/staging/deploy/maven2"
+}
 
-repository := "markatta-releases"
-
-bintrayOrganization := Some("markatta")
-
-packageLabels := Seq("scala", "testing", "web")
-
-licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-
+pomExtra :=
+  <scm>
+    <url>git@github.com:johanandren/scalenium.git</url>
+    <connection>scm:git:git@github.com:johanandren/scalenium.git</connection>
+  </scm>
+    <developers>
+      <developer>
+        <id>johanandren</id>
+        <name>Johan Andrén</name>
+        <email>johan@markatta.com</email>
+        <url>https://markatta.com/johan/codemonkey</url>
+      </developer>
+    </developers>
