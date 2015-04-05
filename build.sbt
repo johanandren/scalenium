@@ -2,7 +2,7 @@ import de.heikoseeberger.sbtheader.license.Apache2_0
 
 name := "scalenium"
 
-version := "1.0.1"
+version := "1.0.2-SNAPSHOT"
 
 organization := "com.markatta"
 
