@@ -26,6 +26,10 @@ import com.markatta.scalenium._
 val browser = new Browser(new org.openqa.selenium.htmlunit.HtmlUnitDriver)
 """
 
+headers := Map(
+  "scala" -> Apache2_0("2015", "Johan Andrén")
+)
+
 // releasing
 sonatypeSettings
 licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
