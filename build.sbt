@@ -1,7 +1,7 @@
 import de.heikoseeberger.sbtheader.license.Apache2_0
 
 name := "scalenium"
-version := "1.0.2-SNAPSHOT"
+version := "1.0.2"
 organization := "com.markatta"
 
 scalaVersion := "2.11.4"

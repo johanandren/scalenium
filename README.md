@@ -15,7 +15,7 @@ Using the library
 Scalenium is available from maven central, just add it Scalenium to your dependencies:
 
 ```scala
-libraryDependencies += "com.markatta" %% "scalenium" % "1.0.1"
+libraryDependencies += "com.markatta" %% "scalenium" % "1.0.2"
 ```
 
 Setting up base object of library
