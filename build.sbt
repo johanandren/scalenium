@@ -1,12 +1,11 @@
 import de.heikoseeberger.sbtheader.license.Apache2_0
 
 name := "scalenium"
-
 version := "1.0.2-SNAPSHOT"
-
 organization := "com.markatta"
 
 scalaVersion := "2.11.4"
+crossScalaVersions := Seq(scalaVersion.value, "2.10.5")
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
