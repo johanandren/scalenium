@@ -5,8 +5,8 @@ scalenium
 A Scala-ified fluent wrapper for selenium webdriver heavily inspired by FluentLenium but making use
 of the scala collection API:s and all the fun DSL:y stuff possible with Scala.
 
-Please note that this library is still a proof of concept and playground for various ideas of how
-a selenium API in scala should look.
+License: [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
+
 
 
 Using the library
@@ -15,8 +15,16 @@ Using the library
 Scalenium is available from maven central, just add it Scalenium to your dependencies:
 
 ```scala
-libraryDependencies += "com.markatta" %% "scalenium" % "1.0.2"
+libraryDependencies += "com.markatta" %% "scalenium" % "1.0.3"
 ```
+
+Latest stable version:
+
+* Scala 2.12 - [![Maven Central, Scala 2.12](https://maven-badges.herokuapp.com/maven-central/com.markatta/scalenium_2.12/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalenium_2.12%22) 
+* Scala 2.11 - [![Maven Central, Scala 2.11](https://maven-badges.herokuapp.com/maven-central/com.markatta/scalenium_2.11/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalenium_2.11%22)
+* Scala 2.10 - [![Maven Central, Scala 2.10](https://maven-badges.herokuapp.com/maven-central/com.markatta/scalenium_2.10/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalenium_2.10%22)
+
+
 
 Setting up base object of library
 ---------------------------------
