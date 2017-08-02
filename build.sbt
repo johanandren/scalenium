@@ -5,7 +5,7 @@ version := "1.0.3-SNAPSHOT"
 organization := "com.markatta"
 
 scalaVersion := "2.12.2"
-crossScalaVersions := Seq(scalaVersion.value, "2.11.8", "2.10.6")
+crossScalaVersions := Seq(scalaVersion.value, "2.11.11", "2.10.6")
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
