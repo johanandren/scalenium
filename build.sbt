@@ -4,15 +4,15 @@ name := "scalenium"
 version := "1.0.3-SNAPSHOT"
 organization := "com.markatta"
 
-scalaVersion := "2.11.4"
-crossScalaVersions := Seq(scalaVersion.value, "2.10.5")
+scalaVersion := "2.12.2"
+crossScalaVersions := Seq(scalaVersion.value, "2.11.8", "2.10.6")
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
 libraryDependencies ++= Seq(
   "org.seleniumhq.selenium" % "selenium-java" % "2.44.0",
   // this should probably be an optional dependency somehow, extract specs2 integration to separate module?
-  "org.specs2" %% "specs2" % "2.4.15"
+  "org.specs2" %% "specs2" % "2.4.17"
 )
 
 resolvers ++= Seq(
